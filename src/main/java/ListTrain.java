@@ -9,7 +9,7 @@ public class ListTrain {
         System.out.println("Список всех имеющихся поездов: " + addTrainsToList());
         System.out.println("Найдены поезда с местом прибытия Vologda: " + searchTrainLocation("Vologda"));
         System.out.println("Найдены поезда с местом прибытия Rybinsk и временем отправки 2022-11-25 17:00: " +
-                searchTrainLocationAndTime("Rybinsk",LocalDateTime.of(2022, 11, 25, 17, 00)));
+                searchTrainLocationAndTime("Rybinsk","2022-11-25 17:00"));
 
     }
 
@@ -19,8 +19,8 @@ public class ListTrain {
     }
 
     // метод поиска поезда по месту прибытия и времени  отправления
-    public static List<Train> searchTrainLocationAndTime(String location, LocalDateTime departureDate) {
-        return addTrainsToList().stream().filter(p -> p.getPlaceOfArrival()==location && p.getDepartureDate()==departureDate).collect(Collectors.toList());
+    public static List<Train> searchTrainLocationAndTime(String location, String departureDate) {
+        return addTrainsToList().stream().filter(p -> p.getPlaceOfArrival()==location && p.getDepartureDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))==departureDate).collect(Collectors.toList());
     }
 
     // метод добавления списка поездов
