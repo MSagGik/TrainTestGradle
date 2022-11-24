@@ -26,7 +26,7 @@ class TrainTest {
         Train trainTwo = new Train("001 Moscow-Vologda","Moscow","Vologda",
                 LocalDateTime.parse("2022-11-25 10:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
                 LocalDateTime.parse("2022-11-25 12:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
-                250);
+                450);
         assertNotEquals("Moscow-Krasnodar", trainTwo.getName());
         assertNotEquals(500, trainTwo.getDistance());
         assertNotNull(trainTwo);
