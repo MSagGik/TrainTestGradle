@@ -5,11 +5,17 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ListTrain {
+
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_CYAN = "\u001B[36m";
+
     public static void main(String[] args) {
-        System.out.println("Список всех имеющихся поездов: " + addTrainsToList());
-        System.out.println("Найдены поезда с местом прибытия Vologda: " + searchTrainLocation("Vologda"));
-        System.out.println("Найдены поезда с местом прибытия Rybinsk и временем отправки 2022-11-25 17:00: " +
-                searchTrainLocationAndTime("Rybinsk","2022-11-25 17:00"));
+        System.out.println(ANSI_BLUE + "Список всех имеющихся поездов: " + ANSI_RESET + addTrainsToList());
+        System.out.println(ANSI_PURPLE + "Найдены поезда с местом прибытия 'Вологда': " + ANSI_RESET + searchTrainLocation("Вологда"));
+        System.out.println(ANSI_CYAN + "Найдены поезда с местом прибытия 'Рыбинск' и временем отправки в 17:00 25.11.2022 года: " + ANSI_RESET +
+                searchTrainLocationAndTime("Рыбинск","17:00 25.11.2022"));
 
     }
 
@@ -20,24 +26,28 @@ public class ListTrain {
 
     // метод поиска поезда по месту прибытия и времени  отправления
     public static List<Train> searchTrainLocationAndTime(String location, String departureDate) {
-        return addTrainsToList().stream().filter(p -> p.getPlaceOfArrival()==location && p.getDepartureDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))==departureDate).collect(Collectors.toList());
+        return addTrainsToList().stream().filter(p -> p.getPlaceOfArrival()==location && p.getDepartureDate()==departureDate).collect(Collectors.toList());
     }
 
     // метод добавления списка поездов
     public static List<Train> addTrainsToList() {
         List<Train> trainList = new ArrayList<>();
-        addTrainToList(trainList,"Yaroslavl","Vologda",
+        addTrainToList(trainList,"Ярославль","Вологда",
                 LocalDateTime.of(2022, 11, 25, 10, 00),
                 LocalDateTime.of(2022, 11, 25, 12, 00),
                 250);
-        addTrainToList(trainList,"Yaroslavl","Kostroma",
+        addTrainToList(trainList,"Ярославль","Кострома",
                 LocalDateTime.of(2022, 11, 25, 14, 00),
                 LocalDateTime.of(2022, 11, 25, 15, 00),
                 90);
-        addTrainToList(trainList,"Yaroslavl","Rybinsk",
+        addTrainToList(trainList,"Ярославль","Рыбинск",
                 LocalDateTime.of(2022, 11, 25, 17, 00),
                 LocalDateTime.of(2022, 11, 25, 19, 00),
                 80);
+        addTrainToList(trainList,"Ярославль","Лукоморье",
+                LocalDateTime.of(2022, 11, 25, 16, 00),
+                LocalDateTime.of(2022, 11, 25, 21, 00),
+                1000);
         return trainList;
     }
     // метод добавления нового поезда Train в список поездов List<Train> trains

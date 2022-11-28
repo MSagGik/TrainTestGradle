@@ -1,5 +1,6 @@
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Objects;
 
@@ -15,6 +16,12 @@ public class Train {
     }
 
     public Train(String name, String departurePoint, String placeOfArrival, LocalDateTime departureDate, LocalDateTime arrivalDate, double distance) {
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("Ошибка - название поезда было заданно пустым: [" + name + "]");
+        }
+        if (distance < 0) {
+            throw new IllegalArgumentException("Ошибка - было заданно отрицательная длина пути следования поезда: [" + distance + "]");
+        }
         this.name = name;
         this.departurePoint = departurePoint;
         this.placeOfArrival = placeOfArrival;
@@ -47,16 +54,23 @@ public class Train {
         this.placeOfArrival = placeOfArrival;
     }
 
-    public LocalDateTime getDepartureDate() {
+    public LocalDateTime getDepartureDateOriginal() {
         return departureDate;
+    }
+
+    public String getDepartureDate() {
+        return departureDate.format(DateTimeFormatter.ofPattern("HH:mm dd.MM.yyyy"));
     }
 
     public void setDepartureDate(LocalDateTime departureDate) {
         this.departureDate = departureDate;
     }
 
-    public LocalDateTime getArrivalDate() {
+    public LocalDateTime getArrivalDateOriginal() {
         return arrivalDate;
+    }
+    public String getArrivalDate() {
+        return arrivalDate.format(DateTimeFormatter.ofPattern("HH:mm dd.MM.yyyy"));
     }
 
     public void setArrivalDate(LocalDateTime arrivalDate) {
@@ -86,17 +100,17 @@ public class Train {
 
     @Override
     public String toString() {
-        return "Поезд " + name +
-                ", отправляется из точки " + departurePoint +
-                " в " + departureDate +
-                ", прибывает в точку " + placeOfArrival +
-                " в " + arrivalDate +
-                ", расстояние пути " + distance;
+        return "\n" + "Поезд " + name +
+                ", отправляется из пункта " + departurePoint +
+                " в " + departureDate.format(DateTimeFormatter.ofPattern("HH:mm dd.MM.yyyy")) +
+                " года, прибывает в пункт " + placeOfArrival +
+                " в " + arrivalDate.format(DateTimeFormatter.ofPattern("HH:mm dd.MM.yyyy")) +
+                " года, расстояние пути " + distance + " километров";
     }
 
     // метод вычисляющий длительность пути
     public long travelTime () {
-        return Duration.between(getDepartureDate(), getArrivalDate()).toHours(); // Duration.between - метод вычисляющий разность между двумя датами
+        return Duration.between(departureDate, arrivalDate).toHours(); // Duration.between - метод вычисляющий разность между двумя датами
     }
 
     // метод вычисляющий среднюю скорость в пути
