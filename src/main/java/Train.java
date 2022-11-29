@@ -15,7 +15,7 @@ public class Train {
     public Train() {
     }
 
-    public Train(String name, String departurePoint, String placeOfArrival, LocalDateTime departureDate, LocalDateTime arrivalDate, double distance) {
+    public Train(String name, String departurePoint, String placeOfArrival, String departureDate, String arrivalDate, double distance) {
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("Ошибка - название поезда было заданно пустым: [" + name + "]");
         }
@@ -25,8 +25,8 @@ public class Train {
         this.name = name;
         this.departurePoint = departurePoint;
         this.placeOfArrival = placeOfArrival;
-        this.departureDate = departureDate;
-        this.arrivalDate = arrivalDate;
+        this.departureDate = LocalDateTime.parse(departureDate, DateTimeFormatter.ofPattern("HH:mm dd.MM.yyyy"));
+        this.arrivalDate = LocalDateTime.parse(arrivalDate, DateTimeFormatter.ofPattern("HH:mm dd.MM.yyyy"));
         this.distance = distance;
     }
 
@@ -54,10 +54,6 @@ public class Train {
         this.placeOfArrival = placeOfArrival;
     }
 
-    public LocalDateTime getDepartureDateOriginal() {
-        return departureDate;
-    }
-
     public String getDepartureDate() {
         return departureDate.format(DateTimeFormatter.ofPattern("HH:mm dd.MM.yyyy"));
     }
@@ -68,6 +64,9 @@ public class Train {
 
     public LocalDateTime getArrivalDateOriginal() {
         return arrivalDate;
+    }
+    public LocalDateTime getDepartureDateOriginal() {
+        return departureDate;
     }
     public String getArrivalDate() {
         return arrivalDate.format(DateTimeFormatter.ofPattern("HH:mm dd.MM.yyyy"));
@@ -100,7 +99,7 @@ public class Train {
 
     @Override
     public String toString() {
-        return "\n" + "Поезд " + name +
+        return "Поезд " + name +
                 ", отправляется из пункта " + departurePoint +
                 " в " + departureDate.format(DateTimeFormatter.ofPattern("HH:mm dd.MM.yyyy")) +
                 " года, прибывает в пункт " + placeOfArrival +

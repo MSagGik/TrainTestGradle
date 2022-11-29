@@ -26,33 +26,41 @@ public class ListTrain {
 
     // метод поиска поезда по месту прибытия и времени  отправления
     public static List<Train> searchTrainLocationAndTime(String location, String departureDate) {
-        return addTrainsToList().stream().filter(p -> p.getPlaceOfArrival()==location && p.getDepartureDate()==departureDate).collect(Collectors.toList());
+        return addTrainsToList().stream().filter(p -> p.getPlaceOfArrival().equals(location) && p.getDepartureDate().equals(departureDate)).collect(Collectors.toList());
     }
 
     // метод добавления списка поездов
     public static List<Train> addTrainsToList() {
         List<Train> trainList = new ArrayList<>();
         addTrainToList(trainList,"Ярославль","Вологда",
-                LocalDateTime.of(2022, 11, 25, 10, 00),
-                LocalDateTime.of(2022, 11, 25, 12, 00),
+                "10:00 25.11.2022",
+                "12:00 25.11.2022",
+                //LocalDateTime.of(2022, 11, 25, 10, 00),
+                //LocalDateTime.of(2022, 11, 25, 12, 00),
                 250);
         addTrainToList(trainList,"Ярославль","Кострома",
-                LocalDateTime.of(2022, 11, 25, 14, 00),
-                LocalDateTime.of(2022, 11, 25, 15, 00),
+                "14:00 25.11.2022",
+                "15:00 25.11.2022",
+                //LocalDateTime.of(2022, 11, 25, 14, 00),
+                //LocalDateTime.of(2022, 11, 25, 15, 00),
                 90);
         addTrainToList(trainList,"Ярославль","Рыбинск",
-                LocalDateTime.of(2022, 11, 25, 17, 00),
-                LocalDateTime.of(2022, 11, 25, 19, 00),
+                "17:00 25.11.2022",
+                "19:00 25.11.2022",
+                //LocalDateTime.of(2022, 11, 25, 17, 00),
+                //LocalDateTime.of(2022, 11, 25, 19, 00),
                 80);
         addTrainToList(trainList,"Ярославль","Лукоморье",
-                LocalDateTime.of(2022, 11, 25, 16, 00),
-                LocalDateTime.of(2022, 11, 25, 21, 00),
+                "16:00 25.11.2022",
+                "21:00 25.11.2022",
+                //LocalDateTime.of(2022, 11, 25, 16, 00),
+                //LocalDateTime.of(2022, 11, 25, 21, 00),
                 1000);
         return trainList;
     }
     // метод добавления нового поезда Train в список поездов List<Train> trains
     public static List<Train> addTrainToList(List<Train> trains, String departurePoint, String placeOfArrival,
-                                       LocalDateTime departureDate, LocalDateTime arrivalDate, double distance) {
+                                       String departureDate, String arrivalDate, double distance) {
         trains.add(new Train((departurePoint + " - " + placeOfArrival), departurePoint, placeOfArrival,
                 departureDate, arrivalDate, distance));
         return trains;
